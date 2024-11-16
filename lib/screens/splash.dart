@@ -27,7 +27,7 @@ class _SplashScreenState extends State<SplashScreen>
 
     _controller.forward();
 
-    // Navigate to the login screen after the splash screen
+    //Navigate to the login screen after the splash screen
     Timer(const Duration(seconds: 15), () {
       Navigator.of(context).pushReplacementNamed('/login');
     });
@@ -48,15 +48,11 @@ class _SplashScreenState extends State<SplashScreen>
           child: Column(
             mainAxisAlignment: MainAxisAlignment.center,
             children: [
-              Image.asset(
-                'assets/splash_image.png',
-                width: 400,
-                height: 400,
-              ), // Use your splash image here
-              const SizedBox(height: 20),
+              //Uniguru Text
               Text(
                 'UniGuru',
                 style: TextStyle(
+                  fontFamily: 'Lexend',
                   fontSize: 28,
                   fontWeight: FontWeight.bold,
                   foreground: Paint()
@@ -74,6 +70,14 @@ class _SplashScreenState extends State<SplashScreen>
                         0, 0, 400, 70)), // Set the rect for the gradient
                 ),
               ),
+              const SizedBox(height: 4),
+              //Spalsh Screen Logo
+              Image.asset(
+                'assets/splash_image.png',
+                width: 400,
+                height: 400,
+              ), // Use your splash image here
+              const SizedBox(height: 20),
             ],
           ),
         ),

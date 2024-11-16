@@ -15,14 +15,15 @@ class MyApp extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return MaterialApp(
+      debugShowCheckedModeBanner: false,
       title: 'UniGuru',
       theme: appTheme, // Use the appTheme defined in theme.dart
       initialRoute: '/',
       routes: {
         '/': (context) => const SplashScreen(),
         '/login': (context) => const LoginScreen(),
-        '/welcome': (context) => WelcomePage(userName: "john smith"),
-        '/home': (context) => HomePage(),
+        '/welcome': (context) => const WelcomePage(userName: "John Smith"),
+        '/home': (context) => const HomePage(),
       },
     );
   }
