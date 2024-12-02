@@ -36,6 +36,13 @@ dependencies:
   # Use with the CupertinoIcons class for iOS style icons.
   cupertino_icons: ^1.0.8
   google_fonts: ^6.2.1
+<<<<<<< HEAD
+=======
+  mongo_dart: ^0.10.3
+  google_sign_in: ^6.2.2
+  http: ^1.2.2
+  vector_math: ^2.1.4
+>>>>>>> 2a2b775 (Project)
 
 dev_dependencies:
   flutter_test:
@@ -66,6 +73,21 @@ flutter:
     - assets/facebook.png
     - assets/twitter.png
     - assets/robogirl1.png
+<<<<<<< HEAD
+=======
+    - assets/spritual.png
+    - assets/settings.png
+    - assets/voice.png
+    - assets/send.png
+    - assets/spritual_light.png
+    - assets/setting_light.png
+    - assets/voice_light.png
+    - assets/send_light.png
+    - assets/add.png
+    - assets/profile.png
+    - assets/email.png
+    - assets/demo.jpg
+>>>>>>> 2a2b775 (Project)
 
   # An image asset can refer to one or more resolution-specific "variants", see
   # https://flutter.dev/to/resolution-aware-images
