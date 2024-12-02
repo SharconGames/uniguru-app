@@ -16,11 +16,6 @@ class GradientButton extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-<<<<<<< HEAD
-    return Container(
-      width: width,
-      height: height,
-=======
     // Get the screen width and height using MediaQuery
     final screenWidth = MediaQuery.of(context).size.width;
     final screenHeight = MediaQuery.of(context).size.height;
@@ -36,7 +31,6 @@ class GradientButton extends StatelessWidget {
       height: height != 0
           ? height
           : dynamicHeight, // Use passed height or dynamic value
->>>>>>> 2a2b775 (Project)
       decoration: BoxDecoration(
         gradient: const LinearGradient(
           colors: [
@@ -57,10 +51,7 @@ class GradientButton extends StatelessWidget {
         style: ElevatedButton.styleFrom(
           backgroundColor: Colors.transparent,
           shadowColor: Colors.transparent,
-<<<<<<< HEAD
-=======
           overlayColor: Colors.purpleAccent.shade200,
->>>>>>> 2a2b775 (Project)
           shape: RoundedRectangleBorder(
             borderRadius: BorderRadius.circular(25.0),
           ),
@@ -68,15 +59,11 @@ class GradientButton extends StatelessWidget {
         child: Text(
           text, // Displaying the text
           style: const TextStyle(
-<<<<<<< HEAD
-              color: Colors.white, fontSize: 16, fontFamily: 'Lexend'),
-=======
             color: Colors.white,
             fontSize: 16,
             fontFamily: 'Lexend',
             fontWeight: FontWeight.bold,
           ),
->>>>>>> 2a2b775 (Project)
         ),
       ),
     );

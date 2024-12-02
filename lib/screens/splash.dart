@@ -28,11 +28,7 @@ class _SplashScreenState extends State<SplashScreen>
     _controller.forward();
 
     //Navigate to the login screen after the splash screen
-<<<<<<< HEAD
-    Timer(const Duration(seconds: 15), () {
-=======
     Timer(const Duration(seconds: 4), () {
->>>>>>> 2a2b775 (Project)
       Navigator.of(context).pushReplacementNamed('/login');
     });
   }
@@ -45,11 +41,8 @@ class _SplashScreenState extends State<SplashScreen>
 
   @override
   Widget build(BuildContext context) {
-<<<<<<< HEAD
-=======
     double screenwidth = MediaQuery.of(context).size.width;
     double screenheight = MediaQuery.of(context).size.height;
->>>>>>> 2a2b775 (Project)
     return Scaffold(
       body: Center(
         child: FadeTransition(
@@ -79,16 +72,6 @@ class _SplashScreenState extends State<SplashScreen>
                         0, 0, 400, 70)), // Set the rect for the gradient
                 ),
               ),
-<<<<<<< HEAD
-              const SizedBox(height: 4),
-              //Spalsh Screen Logo
-              Image.asset(
-                'assets/splash_image.png',
-                width: 400,
-                height: 400,
-              ), // Use your splash image here
-              const SizedBox(height: 20),
-=======
               //SizedBox(height: screenheight * 0.0009),
               //Spalsh Screen Logo
               SizedBox(
@@ -100,7 +83,6 @@ class _SplashScreenState extends State<SplashScreen>
                 ),
               ), // Use your splash image here
               SizedBox(height: screenheight * 0.01),
->>>>>>> 2a2b775 (Project)
             ],
           ),
         ),
