@@ -17,9 +17,12 @@ class SocialSignupButton extends StatelessWidget {
     return ElevatedButton(
       onPressed: onPressed,
       style: ElevatedButton.styleFrom(
-        backgroundColor: const Color(0xFF403B4D),
+        backgroundColor: Colors.transparent, // Make the button transparent
+        elevation: 0, // Remove elevation to ensure flat appearance
         shape: RoundedRectangleBorder(
           borderRadius: BorderRadius.circular(25.0),
+          side: BorderSide(
+              color: Colors.white.withOpacity(0.5)), // Optional: Add a border
         ),
         padding: const EdgeInsets.symmetric(horizontal: 20, vertical: 12),
       ),

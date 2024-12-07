@@ -1,12 +1,12 @@
 import 'package:flutter/material.dart';
 import 'dart:async';
-// Import the theme.dart file
+import '../widgets/star_background.dart';
+// Import the StarBackground widget
 
 class SplashScreen extends StatefulWidget {
   const SplashScreen({super.key});
 
   @override
-  // ignore: library_private_types_in_public_api
   _SplashScreenState createState() => _SplashScreenState();
 }
 
@@ -27,7 +27,7 @@ class _SplashScreenState extends State<SplashScreen>
 
     _controller.forward();
 
-    //Navigate to the login screen after the splash screen
+    // Navigate to the login screen after the splash screen
     Timer(const Duration(seconds: 4), () {
       Navigator.of(context).pushReplacementNamed('/login');
     });
@@ -43,50 +43,50 @@ class _SplashScreenState extends State<SplashScreen>
   Widget build(BuildContext context) {
     double screenwidth = MediaQuery.of(context).size.width;
     double screenheight = MediaQuery.of(context).size.height;
-    return Scaffold(
-      body: Center(
-        child: FadeTransition(
-          opacity: _animation,
-          child: Column(
-            mainAxisAlignment: MainAxisAlignment.center,
-            children: [
-              //Uniguru Text
-              Text(
-                'UniGuru',
-                style: TextStyle(
-                  fontFamily: 'Lexend',
-                  fontSize: 28,
-                  fontWeight: FontWeight.bold,
-                  foreground: Paint()
-                    ..shader = const LinearGradient(
-                      colors: [
-                        Color(0xFFE4BB1A), // Muted yellow
-                        Color(0xFFE6C300), // Dimmed golden yellow
-                        Color(0xFFB9961F), // Dark gold
-                        Color(0xFF9B6F00), // Muted bronze
-                      ],
-                      begin: Alignment.bottomRight,
-                      end: Alignment.topLeft,
-                      // ignore: prefer_const_constructors
-                    ).createShader(Rect.fromLTWH(
-                        0, 0, 400, 70)), // Set the rect for the gradient
+
+    return Stack( // Use Stack to layer widgets
+      children: [
+        const StarBackground(), // Add star background
+        Center(
+          child: FadeTransition(
+            opacity: _animation,
+            child: Column(
+              mainAxisAlignment: MainAxisAlignment.center,
+              children: [
+                // UniGuru Text
+                Text(
+                  'UniGuru',
+                  style: TextStyle(
+                    fontFamily: 'Lexend',
+                    fontSize: 28,
+                    fontWeight: FontWeight.bold,
+                    foreground: Paint()
+                      ..shader = const LinearGradient(
+                        colors: [
+                          Color(0xFFE4BB1A), // Muted yellow
+                          Color(0xFFE6C300), // Dimmed golden yellow
+                          Color(0xFFB9961F), // Dark gold
+                          Color(0xFF9B6F00), // Muted bronze
+                        ],
+                        begin: Alignment.bottomRight,
+                        end: Alignment.topLeft,
+                      ).createShader(Rect.fromLTWH(0, 0, 400, 70)), // Set the rect for the gradient
+                  ),
                 ),
-              ),
-              //SizedBox(height: screenheight * 0.0009),
-              //Spalsh Screen Logo
-              SizedBox(
-                height: screenheight * 0.40,
-                child: Image.asset(
-                  'assets/splash_image.png',
-                  width: screenwidth * 0.7,
-                  height: screenheight * 0.7,
-                ),
-              ), // Use your splash image here
-              SizedBox(height: screenheight * 0.01),
-            ],
+                SizedBox(
+                  height: screenheight * 0.40,
+                  child: Image.asset(
+                    'assets/splash_image.png',
+                    width: screenwidth * 0.7,
+                    height: screenheight * 0.7,
+                  ),
+                ), // Use your splash image here
+                SizedBox(height: screenheight * 0.01),
+              ],
+            ),
           ),
         ),
-      ),
+      ],
     );
   }
 }

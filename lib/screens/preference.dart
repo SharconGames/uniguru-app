@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:uniguru/widgets/dropdown.dart';
+import 'package:uniguru/widgets/star_background.dart'; // Import your StarBackground widget here
 
 class PreferenceScreen extends StatefulWidget {
   const PreferenceScreen({super.key});
@@ -57,6 +58,9 @@ class _PreferenceScreenState extends State<PreferenceScreen> {
       backgroundColor: const Color(0xFF0D0513),
       body: Stack(
         children: [
+          // Star background
+          StarBackground(), // Add the StarBackground widget here
+
           // Main content
           Column(
             mainAxisAlignment: MainAxisAlignment.start,
@@ -317,12 +321,15 @@ class _PreferenceScreenState extends State<PreferenceScreen> {
                       width: 35,
                       child: Image.asset('assets/voice_light.png'),
                     ),
-                    // IconButton for send
-                    SizedBox(
-                      height: 40,
-                      width: 40,
-                      child: Image.asset('assets/send_light.png'),
-                    ),
+                    // // IconButton for send
+                    // GestureDetector(
+                    //   onTap: _sendMessage,
+                    //   child: SizedBox(
+                    //     height: 40,
+                    //     width: 40,
+                    //     child: Image.asset('assets/send_light.png'),
+                    //   ),
+                    // ),
                   ],
                 ),
               ),

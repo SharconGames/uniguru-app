@@ -24,11 +24,11 @@ class CustomDropdown extends StatelessWidget {
         child: ShaderMask(
           shaderCallback: (bounds) => const LinearGradient(
             colors: [
-              Color(0xFF664D00),
+              Color(0xFF664D00), // Dark Golden
               Color(0xFF7F6209), // Dark Orchid
               Color(0xFFDAA520), // Golden Rod
               Color(0xFF7F6209), // Dark Orchid
-              Color(0xFF664D00),
+              Color(0xFF664D00), // Dark Golden
             ],
             begin: Alignment.centerLeft,
             end: Alignment.centerRight,
@@ -56,40 +56,45 @@ class CustomDropdown extends StatelessWidget {
               mainAxisAlignment: MainAxisAlignment.start,
               children: [
                 ShaderMask(
-                  shaderCallback: (bounds) => const LinearGradient(colors: [
-                    Color(0xFF59D2BF), // Teal
-                    Color(0xFF74BDCC), // Aqua Blue
-                    Color(0xFF9791DB), // Soft Blue
-                  ]).createShader(bounds),
+                  shaderCallback: (bounds) => const LinearGradient(
+                    colors: [
+                      Color(0xFF59D2BF), // Teal
+                      Color(0xFF74BDCC), // Aqua Blue
+                      Color(0xFF9791DB), // Soft Blue
+                    ],
+                  ).createShader(bounds),
                   child: Text(
                     '${index + 1}.',
                     style: const TextStyle(
-                        fontSize: 16,
-                        fontWeight: FontWeight.bold,
-                        color: Colors.white),
+                      fontSize: 16,
+                      fontWeight: FontWeight.bold,
+                      color: Colors.white,
+                    ),
                   ),
                 ),
-                const SizedBox(
-                  width: 15,
-                ),
+                const SizedBox(width: 15),
                 Image.asset(
                   assetPath,
                   height: 25,
                   width: 25,
                 ),
-                const SizedBox(
-                  width: 10,
-                ),
+                const SizedBox(width: 10),
                 ShaderMask(
-                  shaderCallback: (bounds) => const LinearGradient(colors: [
-                    Color(0xFF61ACEF), // Light Blue
-                    Color(0xFF9987ED), // Light Purple
-                    Color(0xFFB679E1), // Lavender
-                    Color(0xFF9791DB), // Soft Blue
-                    Color(0xFF74BDCC), // Aqua Blue
-                    Color(0xFF59D2BF), // Teal
-                  ]).createShader(bounds),
-                  child: Text(value),
+                  shaderCallback: (bounds) => const LinearGradient(
+                    colors: [
+                      Color(0xFF59D2BF), // Teal
+                      Color(0xFF74BDCC), // Aqua Blue
+                      Color(0xFF9791DB), // Soft Blue
+                    ],
+                  ).createShader(bounds),
+                  child: Text(
+                    value,
+                    style: const TextStyle(
+                      fontSize: 16,
+                      fontWeight: FontWeight.bold,
+                      color: Colors.white,
+                    ),
+                  ),
                 ),
               ],
             ),
@@ -102,14 +107,15 @@ class CustomDropdown extends StatelessWidget {
         return items.map<Widget>((String item) {
           return Center(
             child: ShaderMask(
-              shaderCallback: (bounds) => const LinearGradient(colors: [
-                Color(0xFF61ACEF), // Light Blue
-                Color(0xFF9987ED), // Light Purple
-                Color(0xFFB679E1), // Lavender
-                Color(0xFF9791DB), // Soft Blue
-                Color(0xFF74BDCC), // Aqua Blue
-                Color(0xFF59D2BF), // Teal
-              ]).createShader(bounds),
+              shaderCallback: (bounds) => const LinearGradient(
+                colors: [
+                  Color(0xFF664D00), // Dark Golden
+                  Color(0xFF7F6209), // Dark Orchid
+                  Color(0xFFDAA520), // Golden Rod
+                  Color(0xFF7F6209), // Dark Orchid
+                  Color(0xFF664D00), // Dark Golden
+                ],
+              ).createShader(bounds),
               child: Text(
                 item,
                 style: const TextStyle(

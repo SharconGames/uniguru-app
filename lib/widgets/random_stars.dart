@@ -7,14 +7,11 @@ List<Point3D> generateRandomStarPositions(
   final List<Point3D> positions = [];
 
   for (int i = 0; i < count; i++) {
-    final x =
-        random.nextDouble() * width; // Random x position within screen width
-    final y =
-        random.nextDouble() * height; // Random y position within screen height
-    final z = random.nextDouble() *
-        1000; // Random z (depth) position between 0 and 1000
+    final x = (random.nextDouble() * 2 - 1) * width; // Random x position
+    final y = (random.nextDouble() * 2 - 1) * height; // Random y position
+    final z = random.nextDouble() * 1000 + 500; // Random depth (z > 0)
 
-    positions.add(Point3D(x, y, z)); // Store x, y, z in the Point3D class
+    positions.add(Point3D(x, y, z));
   }
   return positions;
 }
