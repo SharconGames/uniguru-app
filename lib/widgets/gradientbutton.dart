@@ -19,53 +19,73 @@ class GradientButton extends StatelessWidget {
     // Get the screen width and height using MediaQuery
     final screenWidth = MediaQuery.of(context).size.width;
     final screenHeight = MediaQuery.of(context).size.height;
+    final textScaleFactor = MediaQuery.of(context).textScaleFactor;
 
-    // Adjust button size dynamically using MediaQuery
-    final dynamicWidth = screenWidth * 0.8; // 80% of screen width
-    final dynamicHeight = screenHeight * 0.07; // 7% of screen height
+    bool isTablet = MediaQuery.of(context).size.shortestSide >= 600 ||
+        (screenWidth > 600 && screenWidth / screenHeight < 0.6);
 
-    return Container(
-      width: width != 0
-          ? width
-          : dynamicWidth, // Use passed width or dynamic value
-      height: height != 0
-          ? height
-          : dynamicHeight, // Use passed height or dynamic value
-      decoration: BoxDecoration(
-        gradient: const LinearGradient(
-          colors: [
-            Color(0xFF61ACEF), // Light Blue
-            Color(0xFF9987ED), // Light Purple
-            Color(0xFFB679E1), // Lavender
-            Color(0xFF9791DB), // Soft Blue
-            Color(0xFF74BDCC), // Aqua Blue
-            Color(0xFF59D2BF), // Teal
-          ],
-          begin: Alignment.bottomRight,
-          end: Alignment.topLeft,
-        ),
-        borderRadius: BorderRadius.circular(25.0),
-      ),
-      child: ElevatedButton(
-        onPressed: onPressed,
-        style: ElevatedButton.styleFrom(
-          backgroundColor: Colors.transparent,
-          shadowColor: Colors.transparent,
-          overlayColor: Colors.purpleAccent.shade200,
-          shape: RoundedRectangleBorder(
+    final dynamicWidth = width ?? screenWidth * 0.8;
+    final dynamicHeight = height ?? screenHeight * 0.07;
+
+    double calculateFontSize() {
+      // Base font size with scaling
+      double baseFontSize = isTablet ? 18 : 16;
+
+      // Adjust font size based on text scale factor
+      if (textScaleFactor > 1.0) {
+        return baseFontSize * 0.8; // Reduce size for larger scale factors
+      }
+
+      return baseFontSize * textScaleFactor;
+    }
+
+    return LayoutBuilder(
+      builder: (context, constraints) {
+        return Container(
+          width: dynamicWidth, // Use passed width or dynamic value
+          height: dynamicHeight, // Use passed height or dynamic value
+          decoration: BoxDecoration(
+            gradient: const LinearGradient(
+              colors: [
+                Color(0xFF61ACEF), // Light Blue
+                Color(0xFF9987ED), // Light Purple
+                Color(0xFFB679E1), // Lavender
+                Color(0xFF9791DB), // Soft Blue
+                Color(0xFF74BDCC), // Aqua Blue
+                Color(0xFF59D2BF), // Teal
+              ],
+              begin: Alignment.bottomRight,
+              end: Alignment.topLeft,
+            ),
             borderRadius: BorderRadius.circular(25.0),
           ),
-        ),
-        child: Text(
-          text, // Displaying the text
-          style: const TextStyle(
-            color: Colors.white,
-            fontSize: 16,
-            fontFamily: 'Lexend',
-            fontWeight: FontWeight.bold,
+          child: ElevatedButton(
+            onPressed: onPressed,
+            style: ElevatedButton.styleFrom(
+              backgroundColor: Colors.transparent,
+              shadowColor: Colors.transparent,
+              overlayColor: Colors.purpleAccent.shade200,
+              shape: RoundedRectangleBorder(
+                borderRadius: BorderRadius.circular(25.0),
+              ),
+            ),
+            child: FittedBox(
+              fit: BoxFit.scaleDown,
+              child: Text(
+                text, // Displaying the text
+                style: TextStyle(
+                  color: Colors.black,
+                  fontSize: isTablet ? 18 : 20,
+                  fontFamily: 'Lexend',
+                  fontWeight: FontWeight.bold,
+                ),
+                maxLines: 1,
+                overflow: TextOverflow.ellipsis,
+              ),
+            ),
           ),
-        ),
-      ),
+        );
+      },
     );
   }
 }

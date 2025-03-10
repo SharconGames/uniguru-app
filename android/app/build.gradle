@@ -28,16 +28,17 @@ android {
         targetSdk = flutter.targetSdkVersion
         versionCode = flutter.versionCode
         versionName = flutter.versionName
+        multiDexEnabled true
     }
 
-    // signingConfigs {
-    //     debug{
-    //         keyAlias 'androiddebugkey'
-    //         keyPassword 'Mysecurekey123!'
-    //         storeFile file('mykey-keystore.jks')
-    //         storePassword 'Mysecurekey123!'
-    //     }
-    // }
+    signingConfigs {
+        debug{
+            keyAlias 'androiddebugkey'
+            keyPassword '123456'
+            storeFile file('mykey.jks')
+            storePassword '123456'
+        }
+    }
 
     buildTypes {
         debug {

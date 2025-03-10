@@ -1,342 +1,254 @@
-import 'package:flutter/material.dart';
-import 'package:uniguru/widgets/dropdown.dart';
-import 'package:uniguru/widgets/star_background.dart'; // Import your StarBackground widget here
+// import 'dart:ui';
+// import 'package:flutter/material.dart';
+// import 'package:uniguru/widgets/dropdown.dart';
+// import 'package:uniguru/widgets/starScreen/star_background.dart';
 
-class PreferenceScreen extends StatefulWidget {
-  const PreferenceScreen({super.key});
+// class PreferenceScreen extends StatefulWidget {
+//   const PreferenceScreen({super.key});
 
-  @override
-  State<PreferenceScreen> createState() => _PreferenceScreenState();
-}
+//   @override
+//   State<PreferenceScreen> createState() => _PreferenceScreenState();
+// }
 
-class _PreferenceScreenState extends State<PreferenceScreen> {
-  int _currentIndex = 0;
+// class _PreferenceScreenState extends State<PreferenceScreen> {
+//   String? selectedUsers;
+//   List<String> users = [
+//     "Blackhole Guru",
+//     "AI Guru",
+//     "Robot Guru",
+//     "Human Guru",
+//     "Khol Guru"
+//   ];
 
-  String? selectedUsers;
-  List<String> users = [
-    "Blackhole Guru",
-    "AI Guru",
-    "Robot Guru",
-    "Human Guru",
-    "Khol Guru"
-  ];
+//   @override
+//   Widget build(BuildContext context) {
+//     double screenWidth = MediaQuery.of(context).size.width;
+//     double screenHeight = MediaQuery.of(context).size.height;
 
-  final TextEditingController _textEditingController = TextEditingController();
-  bool isTyping = false; // typing state
+//     bool isTablet = MediaQuery.of(context).size.shortestSide >= 600 ||
+//         (screenWidth > 600 && screenWidth / screenHeight < 0.6);
 
-  void _onTabTapped(int index) {
-    setState(() {
-      _currentIndex = index;
-    });
-  }
+//     return Scaffold(
+//       backgroundColor: const Color(0xFF0D0513),
+//       body: Stack(
+//         fit: StackFit.expand,
+//         children: [
+//           // Star background
+//           StarBackground(),
 
-  @override
-  void initState() {
-    super.initState();
-    _textEditingController.addListener(() {
-      setState(() {
-        isTyping = _textEditingController.text.isNotEmpty;
-      });
-    });
-  }
+//           // Blur the entire background
+//           ImageFiltered(
+//             imageFilter: ImageFilter.blur(sigmaX: 8, sigmaY: 8),
+//             child: Container(
+//               color: Colors.black.withOpacity(0.2),
+//             ),
+//           ),
 
-  @override
-  void dispose() {
-    _textEditingController.dispose();
-    super.dispose();
-  }
+//           // Blur entire content
+//           ImageFiltered(
+//             imageFilter: ImageFilter.blur(sigmaX: 4, sigmaY: 4),
+//             child: Opacity(
+//               opacity: 0.9,
+//               child: Column(
+//                 mainAxisAlignment: MainAxisAlignment.start,
+//                 children: [
+//                   SizedBox(height: screenHeight * 0.1),
 
-  @override
-  Widget build(BuildContext context) {
-    // Get the screen width and height using MediaQuery
-    double screenWidth = MediaQuery.of(context).size.width;
-    double screenHeight = MediaQuery.of(context).size.height;
-    double screenPadding =
-        MediaQuery.of(context).padding.top; // Get status bar height
+//                   // Header Row
+//                   Row(
+//                     mainAxisAlignment: MainAxisAlignment.spaceBetween,
+//                     children: [
+//                       // Circle Avatar
+//                       Padding(
+//                         padding: const EdgeInsets.only(left: 20),
+//                         child: GestureDetector(
+//                           onTap: () {},
+//                           child: SizedBox(
+//                             height: 50,
+//                             width: 50,
+//                             child: Image.asset('assets/spritual_light.png'),
+//                           ),
+//                         ),
+//                       ),
+//                       // DropDown List
+//                       CustomDropdown(
+//                         assetPath: 'assets/spritual_light.png',
+//                         selectedValue: selectedUsers,
+//                         items: users,
+//                         onChanged: (String? newValue) {
+//                           setState(() {
+//                             selectedUsers = newValue;
+//                           });
+//                         },
+//                         hint: 'BlackHole Guru',
+//                       ),
+//                       // Settings Button
+//                       GestureDetector(
+//                         onTap: () {},
+//                         child: SizedBox(
+//                           height: 50,
+//                           width: 50,
+//                           child: Icon(
+//                             Icons.menu,
+//                             color: Colors.white,
+//                             size: 32,
+//                           ),
+//                         ),
+//                       ),
+//                     ],
+//                   ),
 
-    return Scaffold(
-      backgroundColor: const Color(0xFF0D0513),
-      body: Stack(
-        children: [
-          // Star background
-          StarBackground(), // Add the StarBackground widget here
+//                   SizedBox(height: screenHeight * 0.2),
 
-          // Main content
-          Column(
-            mainAxisAlignment: MainAxisAlignment.start,
-            children: [
-              SizedBox(
-                height: screenHeight *
-                    0.1, // Adjusting space at the top for status bar
-              ),
-              // Row for the CircleAvatar, heading, and settings button
-              Row(
-                mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                children: [
-                  // CircleAvatar
-                  Padding(
-                    padding: const EdgeInsets.only(left: 20),
-                    child: GestureDetector(
-                      onTap: () {}, // OnTap for the circle avatar
-                      child: SizedBox(
-                        height: 50,
-                        width: 50,
-                        child: Image.asset('assets/spritual_light.png'),
-                      ),
-                    ),
-                  ),
-                  // BlackHole Guru Name
-                  // DropDown List
-                  CustomDropdown(
-                    assetPath: 'assets/spritual_light.png',
-                    selectedValue: selectedUsers,
-                    items: users,
-                    onChanged: (String? newValue) {
-                      setState(() {
-                        selectedUsers = newValue;
-                      });
-                    },
-                    hint: 'BlackHole Guru',
-                  ),
-                  // Settings Button
-                  GestureDetector(
-                    onTap: () {}, // OnTap for the settings button
-                    child: SizedBox(
-                      height: 50,
-                      width: 50,
-                      child: Image.asset('assets/setting_light.png'),
-                    ),
-                  ),
-                ],
-              ),
-              SizedBox(
-                height: screenHeight *
-                    0.2, // Adjusting space between name and container
-              ),
-              // Container for the preference
-              Container(
-                height: screenHeight * 0.3, // Adjusting the container height
-                width: screenWidth * 0.75, // Adjusting the container width
-                decoration: BoxDecoration(
-                  gradient: const LinearGradient(
-                    colors: [Color(0xFF2B1736), Color(0xFF2B1736)],
-                    begin: Alignment.topLeft,
-                    end: Alignment.bottomRight,
-                  ),
-                  borderRadius: BorderRadius.circular(20),
-                ),
-                child: Column(
-                  mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-                  children: [
-                    const Center(
-                      // Text "Select Your Preference"
-                      child: Text(
-                        'Select Your Preference',
-                        style: TextStyle(
-                          fontFamily: 'Lexend',
-                          fontSize: 15.0,
-                          fontWeight: FontWeight.bold,
-                          color: Color(0xFFFFFFFF),
-                        ),
-                      ),
-                    ),
-                    // "Let's Chat" button
-                    Center(
-                      child: Container(
-                        decoration: BoxDecoration(
-                          gradient: const LinearGradient(
-                            colors: [
-                              Color(0xFF8AA2D5),
-                              Color(0xFF9A8FDC),
-                              Color(0xFFB47AE2),
-                              Color(0xFFAF7CE4),
-                            ],
-                            begin: Alignment.topCenter,
-                            end: Alignment.bottomCenter,
-                          ),
-                          borderRadius: BorderRadius.circular(50),
-                        ),
-                        child: ElevatedButton(
-                          onPressed: () {
-                            Navigator.pushNamed(context, '/chat');
-                          },
-                          style: ElevatedButton.styleFrom(
-                            padding: const EdgeInsets.symmetric(
-                                horizontal: 40, vertical: 13),
-                            backgroundColor: Colors.transparent,
-                            shadowColor: Colors.transparent,
-                          ),
-                          child: const Text(
-                            "Lets Chat...",
-                            style: TextStyle(
-                              fontFamily: 'Lexend',
-                              fontSize: 18,
-                              fontWeight: FontWeight.bold,
-                              color: Colors.black,
-                            ),
-                          ),
-                        ),
-                      ),
-                    ),
-                    const Padding(
-                      padding: EdgeInsets.symmetric(vertical: 8.0),
-                      child: Row(
-                        children: [
-                          Expanded(
-                            child: Padding(
-                              padding: EdgeInsets.only(left: 40),
-                              child: Divider(
-                                color: Color(0xFF454A6E),
-                                thickness: 1.0,
-                                endIndent: 5.0,
-                              ),
-                            ),
-                          ),
-                          Text(
-                            'OR',
-                            style: TextStyle(
-                              color: Color(0xFf524D5D),
-                              fontSize: 15.0,
-                              fontWeight: FontWeight.normal,
-                            ),
-                          ),
-                          Expanded(
-                            child: Padding(
-                              padding: EdgeInsets.only(right: 40),
-                              child: Divider(
-                                color: Color(0xFF454A6E),
-                                thickness: 1.0,
-                                indent: 5.0,
-                              ),
-                            ),
-                          ),
-                        ],
-                      ),
-                    ),
-                    // "Let's Talk" button
-                    Center(
-                      child: Container(
-                        decoration: BoxDecoration(
-                          gradient: const LinearGradient(
-                            colors: [
-                              Color(0xFF8AA2D5),
-                              Color(0xFF9A8FDC),
-                              Color(0xFFB47AE2),
-                              Color(0xFFAF7CE4),
-                            ],
-                            begin: Alignment.topCenter,
-                            end: Alignment.bottomCenter,
-                          ),
-                          borderRadius: BorderRadius.circular(50),
-                        ),
-                        child: ElevatedButton(
-                          onPressed: () {
-                            Navigator.pushNamed(context, '/chat');
-                          },
-                          style: ElevatedButton.styleFrom(
-                            padding: const EdgeInsets.symmetric(
-                                horizontal: 40, vertical: 13),
-                            backgroundColor: Colors.transparent,
-                            shadowColor: Colors.transparent,
-                          ),
-                          child: const Text(
-                            "Lets Talk...",
-                            style: TextStyle(
-                              fontFamily: 'Lexend',
-                              fontSize: 18,
-                              fontWeight: FontWeight.bold,
-                              color: Colors.black,
-                            ),
-                          ),
-                        ),
-                      ),
-                    ),
-                    const SizedBox(height: 2)
-                  ],
-                ),
-              ),
-              SizedBox(
-                height:
-                    screenHeight * 0.24, // Adjusting space before the TextField
-              ),
-              // "Ask Your Guru" chat positioned at the bottom of the screen
-              Padding(
-                padding: const EdgeInsets.only(left: 25, top: 15),
-                child: Row(
-                  mainAxisAlignment: MainAxisAlignment.start,
-                  children: [
-                    SizedBox(
-                      height: 40,
-                      width: screenWidth *
-                          0.7, // Adjusted TextField width to avoid overflow
-                      child: Container(
-                        decoration: BoxDecoration(
-                          color: const Color(0xFF18141C),
-                          borderRadius: BorderRadius.circular(30.0),
-                        ),
-                        child: Row(
-                          children: [
-                            Expanded(
-                              child: ShaderMask(
-                                shaderCallback: (bounds) =>
-                                    const LinearGradient(colors: [
-                                  Color(0xFF61ACEF),
-                                  Color(0xFF9987ED),
-                                  Color(0xFFB679E1),
-                                  Color(0xFF9791DB),
-                                  Color(0xFf4CAEF5)
-                                ]).createShader(bounds),
-                                child: Padding(
-                                  padding: const EdgeInsets.only(left: 15),
-                                  child: TextField(
-                                    controller: _textEditingController,
-                                    decoration: const InputDecoration(
-                                      hintText: ' Ask Your Guru..',
-                                      hintStyle: TextStyle(
-                                        color: Colors.grey,
-                                        fontSize: 16,
-                                      ),
-                                      border: InputBorder.none,
-                                      contentPadding: EdgeInsets.symmetric(
-                                        vertical: 10,
-                                        horizontal: 5,
-                                      ),
-                                    ),
-                                    style: const TextStyle(
-                                      color: Colors.white,
-                                      fontSize: 16,
-                                    ),
-                                  ),
-                                ),
-                              ),
-                            ),
-                          ],
-                        ),
-                      ),
-                    ),
-                    const SizedBox(width: 1),
-                    // IconButton for voice
-                    SizedBox(
-                      height: 35,
-                      width: 35,
-                      child: Image.asset('assets/voice_light.png'),
-                    ),
-                    // // IconButton for send
-                    // GestureDetector(
-                    //   onTap: _sendMessage,
-                    //   child: SizedBox(
-                    //     height: 40,
-                    //     width: 40,
-                    //     child: Image.asset('assets/send_light.png'),
-                    //   ),
-                    // ),
-                  ],
-                ),
-              ),
-            ],
-          ),
-        ],
-      ),
-    );
-  }
-}
+//                   SizedBox(height: screenHeight * 0.55),
+
+//                   // Footer Row with Flexible and Expanded widgets
+//                   Padding(
+//                     padding: const EdgeInsets.symmetric(horizontal: 20),
+//                     child: Row(
+//                       children: [
+//                         // Ask Your Guru Label with Expanded
+//                         Expanded(
+//                           flex: isTablet ? 25 : 7,
+//                           child: Container(
+//                             height: 40,
+//                             decoration: BoxDecoration(
+//                               color: const Color(0xFF18141C),
+//                               borderRadius: BorderRadius.circular(30.0),
+//                             ),
+//                             child: const Align(
+//                               alignment: Alignment.center,
+//                               child: Text(
+//                                 'Ask Your Guru..',
+//                                 style: TextStyle(
+//                                     color: Colors.grey,
+//                                     fontSize: 17,
+//                                     fontWeight: FontWeight.bold),
+//                                 overflow: TextOverflow.ellipsis,
+//                               ),
+//                             ),
+//                           ),
+//                         ),
+//                         const SizedBox(width: 8),
+//                         // Mic Button
+//                         Flexible(
+//                           child: Container(
+//                             height: 40,
+//                             width: 40,
+//                             decoration: BoxDecoration(
+//                               color: const Color(0xFF18141C),
+//                               borderRadius: BorderRadius.circular(30.0),
+//                             ),
+//                             child: IconButton(
+//                               icon: const Icon(Icons.mic),
+//                               color: Colors.white,
+//                               onPressed: () {},
+//                             ),
+//                           ),
+//                         ),
+//                         const SizedBox(width: 8),
+//                         // Send Button
+//                         Flexible(
+//                           child: Container(
+//                             height: 40,
+//                             width: 40,
+//                             decoration: BoxDecoration(
+//                               color: const Color(0xFF18141C),
+//                               borderRadius: BorderRadius.circular(30.0),
+//                             ),
+//                             child: IconButton(
+//                               icon: const Icon(Icons.send),
+//                               color: Colors.white,
+//                               onPressed: () {},
+//                             ),
+//                           ),
+//                         ),
+//                       ],
+//                     ),
+//                   ),
+//                 ],
+//               ),
+//             ),
+//           ),
+
+//           // Unblurred Preference Container
+//           Center(
+//             child: Container(
+//               height: isTablet ? screenHeight * 0.35 : screenHeight * 0.3,
+//               width: isTablet ? screenWidth * 0.26 : screenWidth * 0.75,
+//               decoration: BoxDecoration(
+//                 color: const Color(0xFF2B1736),
+//                 borderRadius: BorderRadius.circular(20),
+//                 border: Border.all(
+//                   color: Colors.white.withOpacity(0.5),
+//                   width: 2,
+//                 ),
+//               ),
+//               child: Column(
+//                 mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+//                 children: [
+//                   const Center(
+//                     child: Text(
+//                       'Select Your Preference',
+//                       style: TextStyle(
+//                         fontFamily: 'Lexend',
+//                         fontSize: 15.0,
+//                         fontWeight: FontWeight.bold,
+//                         color: Color(0xFFFFFFFF),
+//                       ),
+//                     ),
+//                   ),
+//                   ElevatedButton(
+//                     onPressed: () {
+//                       Navigator.pushNamed(context, '/chat');
+//                     },
+//                     style: ElevatedButton.styleFrom(
+//                       padding: const EdgeInsets.symmetric(
+//                           horizontal: 40, vertical: 13),
+//                       backgroundColor: const Color(0xFF8AA2D5),
+//                       shape: RoundedRectangleBorder(
+//                         borderRadius: BorderRadius.circular(50),
+//                       ),
+//                     ),
+//                     child: const Text(
+//                       "Let's Chat...",
+//                       style: TextStyle(
+//                         fontFamily: 'Lexend',
+//                         fontSize: 18,
+//                         fontWeight: FontWeight.bold,
+//                         color: Colors.black,
+//                       ),
+//                     ),
+//                   ),
+//                   const Text('OR'),
+//                   ElevatedButton(
+//                     onPressed: () {
+//                       Navigator.pushNamed(context, '/chat');
+//                     },
+//                     style: ElevatedButton.styleFrom(
+//                       padding: const EdgeInsets.symmetric(
+//                           horizontal: 40, vertical: 13),
+//                       backgroundColor: const Color(0xFF8AA2D5),
+//                       shape: RoundedRectangleBorder(
+//                         borderRadius: BorderRadius.circular(50),
+//                       ),
+//                     ),
+//                     child: const Text(
+//                       "Let's Talk...",
+//                       style: TextStyle(
+//                         fontFamily: 'Lexend',
+//                         fontSize: 18,
+//                         fontWeight: FontWeight.bold,
+//                         color: Colors.black,
+//                       ),
+//                     ),
+//                   ),
+//                 ],
+//               ),
+//             ),
+//           ),
+//         ],
+//       ),
+//     );
+//   }
+// }

@@ -1,0 +1,17 @@
+{
+  "compilerOptions": {
+    "esModuleInterop": true,
+    "allowSyntheticDefaultImports": true,
+    "module": "NodeNext",
+    "moduleResolution": "NodeNext",
+    "target": "ES2022",
+    "sourceMap": true,
+    "outDir": "dist"
+  },
+  "include": [
+    "src/**/*.ts",
+    "src/index.ts",
+    "src/types/**/*.d.ts",
+    "src/controllers/speech_to_text.tsx"
+, "src/route/auth.ts", "src/model/User.ts"  ]
+}

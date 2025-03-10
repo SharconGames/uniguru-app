@@ -1,54 +1,56 @@
+// lib/main.dart
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
-import 'package:google_sign_in/google_sign_in.dart';
-import 'package:uniguru/dbHelper/mongodb.dart';
-import 'package:uniguru/screens/Changepassword.dart';
-import 'package:uniguru/screens/chat.dart';
-import 'package:uniguru/screens/createguru.dart';
-import 'package:uniguru/screens/home.dart';
-import 'package:uniguru/screens/login.dart';
-import 'package:uniguru/screens/preference.dart';
-import 'package:uniguru/screens/signup.dart';
-import 'package:uniguru/screens/splash.dart';
-import 'package:uniguru/screens/welcome.dart';
+import 'package:uniguru/context/AuthNotifier.dart';
+import 'package:uniguru/pages/route_config.dart' deferred as routes;
+
 import 'package:uniguru/theme/gradient_theme.dart';
-import 'package:uniguru/widgets/stars_screen.dart';
-import 'package:uniguru/screens/profilepage.dart';
+import 'package:uniguru/screens/splash.dart' deferred as splash;
+import 'package:uniguru/screens/home.dart' deferred as home;
+import 'package:uniguru/widgets/starScreen/StarBackgroundWrapper.dart';
 
 void main() async {
   WidgetsFlutterBinding.ensureInitialized();
-  await MongoDatabase.connect();
-  runApp(const ProviderScope(child: MyApp())); //wrap the app in provider scope
+
+  // Load essential modules
+  await Future.wait([
+    routes.loadLibrary(),
+    splash.loadLibrary(),
+    home.loadLibrary(),
+  ]);
+
+  runApp(const ProviderScope(child: MyApp()));
 }
 
-class MyApp extends StatelessWidget {
+class MyApp extends ConsumerWidget {
   const MyApp({super.key});
 
   @override
-  Widget build(BuildContext context) {
+  Widget build(BuildContext context, WidgetRef ref) {
+    final authState = ref.watch(authStateProvider);
+
     return MaterialApp(
       debugShowCheckedModeBanner: false,
       title: 'UniGuru',
-      theme: appTheme, // Use the appTheme defined in theme.dart
-      initialRoute: '/',
-      routes: {
-        '/': (context) => const StarsScreen(),
-        '/': (context) => const SplashScreen(),
-        '/login': (context) => const LoginScreen(),
-        '/signup': (context) => const SignUpScreen(),
-        '/welcome': (context) => WelcomePage(
-            user: ModalRoute.of(context)!.settings.arguments
-                as GoogleSignInAccount),
-        '/home': (context) => const HomePage(),
-        '/createguru': (context) => const Createguru(),
-        '/preference': (context) => const PreferenceScreen(),
-        '/chat': (context) => const ChatScreen(),
-        '/change-password': (context) => const ChangePasswordScreen(),
-        '/profilepage': (context) => const ProfilePage(
-              userName: "Rishit",
-              userSurname: 'Trivedi',
-            ),
-      },
+      theme: appTheme.copyWith(
+        scaffoldBackgroundColor: Colors.transparent,
+      ),
+      home: FutureBuilder(
+        future:
+            authState.isLoggedIn ? home.loadLibrary() : splash.loadLibrary(),
+        builder: (context, snapshot) {
+          if (snapshot.connectionState == ConnectionState.done) {
+            return StarBackgroundWrapper(
+              child: authState.isLoggedIn
+                  ? home.HomePage()
+                  : splash.SplashScreen(),
+            );
+          }
+          return const SizedBox.shrink();
+        },
+      ),
+      onGenerateRoute: (settings) =>
+          routes.RouteConfig.generateRoute(settings, authState.isLoggedIn),
     );
   }
 }

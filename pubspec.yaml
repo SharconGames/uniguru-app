@@ -44,11 +44,29 @@ dependencies:
   speech_to_text: ^7.0.0
   flutter_riverpod: ^2.6.1
   riverpod: ^2.6.1
-  flutter_launcher_icons: ^0.14.2
-
+  flutter_launcher_icons: ^0.14.3
+  shared_preferences: ^2.3.3
+  jwt_decoder: ^2.0.1
+  connectivity_plus: ^4.0.2
+  dio: ^5.7.0
+  go_router: ^14.6.2
+  flutter_tts: ^4.2.1
+  flutter_secure_storage: ^9.2.4
+  logger: ^2.5.0
+  intl: ^0.20.2
+  google_sign_in_web: ^0.12.4+3 
+  google_identity_services_web: ^0.3.3
+  flutter_native_splash: ^2.4.4
+  
 dev_dependencies:
   flutter_test:
     sdk: flutter
+  flutter_launcher_icons: "^0.14.3"
+
+flutter_launcher_icons:
+  android: "launcher_icon"
+  ios: true
+  image_path: "assets/splash_image.png"
 
 
 
@@ -89,6 +107,7 @@ flutter:
     - assets/profile.png
     - assets/email.png
     - assets/demo.jpg
+    - assets/blackhole_logo.png
 
   # An image asset can refer to one or more resolution-specific "variants", see
   # https://flutter.dev/to/resolution-aware-images

@@ -1,9 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:google_sign_in/google_sign_in.dart';
-import 'package:uniguru/dbHelper/login_api.dart';
-import 'package:uniguru/screens/login.dart';
-import '../widgets/star_background.dart';
+import 'package:uniguru/pages/AuthPage.dart';
+import '../widgets/starScreen/star_background.dart';
 
 class WelcomePage extends StatelessWidget {
   //final String userName;
@@ -19,6 +18,9 @@ class WelcomePage extends StatelessWidget {
     // Get the screen dimensions
     final screenHeight = MediaQuery.of(context).size.height;
     final screenWidth = MediaQuery.of(context).size.width;
+    // Determine if it's a tablet with a more precise check
+    bool isTablet = MediaQuery.of(context).size.shortestSide >= 600 ||
+        (screenWidth > 600 && screenWidth / screenHeight < 0.6);
 
     return GestureDetector(
       onTap: () {
@@ -34,12 +36,16 @@ class WelcomePage extends StatelessWidget {
             body: SingleChildScrollView(
               // Wrap the entire body in a SingleChildScrollView
               child: Padding(
-                padding: EdgeInsets.all(screenWidth * 0.04), // Dynamic padding
+                padding: EdgeInsets.symmetric(
+                  horizontal: isTablet
+                      ? screenWidth * 0.08 // Increased margin for tablets
+                      : screenWidth * 0.04, // Original margin for phones
+                ),
                 child: Column(
                   crossAxisAlignment: CrossAxisAlignment.start,
                   children: [
                     SizedBox(
-                        height: screenHeight * 0.06), // Adjusted top spacing
+                        height: screenHeight * 0.08), // Adjusted top spacing
                     // "Guru" text
                     Center(
                       child: ShaderMask(
@@ -56,14 +62,19 @@ class WelcomePage extends StatelessWidget {
                         child: Text(
                           'Gurus',
                           style: GoogleFonts.roboto(
-                            fontSize: screenWidth * 0.07, // Dynamic font size
+                            fontSize: isTablet
+                                ? screenWidth * 0.05
+                                : screenWidth * 0.08, // Dynamic font size
                             fontWeight: FontWeight.bold,
                             color: Colors.white,
                           ),
                         ),
                       ),
                     ),
-                    SizedBox(height: screenHeight * 0.12), // Adjusted spacing
+                    SizedBox(
+                        height: isTablet
+                            ? screenHeight * 0.07
+                            : screenHeight * 0.12), // Adjusted spacing
 
                     // "Welcome" text
                     ShaderMask(
@@ -81,14 +92,20 @@ class WelcomePage extends StatelessWidget {
                         child: Text(
                           'Welcome,',
                           style: GoogleFonts.lexend(
-                            fontSize: screenWidth * 0.06, // Dynamic font size
+                            fontSize: isTablet
+                                ? screenWidth * 0.038
+                                : screenWidth * 0.06, // Dynamic font size
                             fontWeight: FontWeight.w600,
                             color: Colors.white,
                           ),
                         ),
                       ),
                     ),
-                    SizedBox(height: screenHeight * 0.06), // Adjusted spacing
+                    SizedBox(
+                      height:
+                          isTablet ? screenHeight * 0.03 : screenHeight * 0.06,
+                    ),
+                    // Adjusted spacing
 
                     // User name (e.g., John Smith)
                     Align(
@@ -106,7 +123,9 @@ class WelcomePage extends StatelessWidget {
                         child: Text(
                           user.displayName!,
                           style: GoogleFonts.lexend(
-                            fontSize: screenWidth * 0.08, // Dynamic font size
+                            fontSize: isTablet
+                                ? screenWidth * 0.045
+                                : screenWidth * 0.07, // Dynamic font size
                             fontWeight: FontWeight.bold,
                             color: Colors.white,
                           ),
@@ -114,17 +133,29 @@ class WelcomePage extends StatelessWidget {
                       ),
                     ),
 
-                    SizedBox(height: screenHeight * 0.12), // Adjusted spacing
+                    SizedBox(
+                        height: isTablet
+                            ? screenHeight * 0.06
+                            : screenHeight * 0.11), // Adjusted spacing
 
                     // Card with welcome text
                     Card(
+                      // margin: EdgeInsets.symmetric(
+                      //   horizontal:
+                      //       isTablet ? screenWidth * 0.08 : screenWidth * 0.05,
+                      //   vertical: isTablet
+                      //       ? screenHeight * 0.02
+                      //       : screenHeight * 0.01,
+                      // ), // Adds spacing from the screen edges
+
                       color: const Color(0xFF2B1736), // Dark purple background
                       shape: RoundedRectangleBorder(
                         borderRadius: BorderRadius.circular(15.0),
                       ),
                       child: Padding(
-                        padding: EdgeInsets.all(
-                            screenWidth * 0.05), // Dynamic padding
+                        padding: EdgeInsets.all(isTablet
+                            ? screenWidth * 0.01
+                            : screenWidth * 0.05), // Dynamic padding
                         child: Column(
                           crossAxisAlignment: CrossAxisAlignment.start,
                           children: [
@@ -142,17 +173,19 @@ class WelcomePage extends StatelessWidget {
                               ).createShader(bounds),
                               child: GestureDetector(
                                 onTap: () async {
-                                  await GoogleSignInApi.logout();
+                                 
 
                                   Navigator.of(context).pushReplacement(
                                       MaterialPageRoute(
-                                          builder: (context) => LoginScreen()));
+                                          builder: (context) => AuthPage()));
                                 },
                                 child: Text(
                                   'Welcome to UniGuru,',
                                   style: GoogleFonts.lexend(
-                                    fontSize:
-                                        screenWidth * 0.06, // Dynamic font size
+                                    fontSize: isTablet
+                                        ? screenWidth * 0.04
+                                        : screenWidth *
+                                            0.06, // Dynamic font size
                                     fontWeight: FontWeight.w700,
                                     color: Colors.white,
                                   ),
@@ -160,14 +193,16 @@ class WelcomePage extends StatelessWidget {
                               ),
                             ),
                             SizedBox(
-                                height:
-                                    screenHeight * 0.01), // Adjusted spacing
+                                height: isTablet
+                                    ? screenHeight * 0.015
+                                    : screenHeight * 0.01), // Adjusted spacing
                             Text(
                               'Step into the future with our AI-powered chat app, blending wisdom and cutting-edge technology. Engage with AI Gurus, and create your customized Gurus offering seamless support, insights, and automation. Discover innovation and personalized assistance in an immersive, futuristic experience. Join us and explore the universe of AI Gurus today!',
                               style: GoogleFonts.lexend(
                                 color: Colors.white.withOpacity(0.9),
-                                fontSize:
-                                    screenWidth * 0.040, // Dynamic font size
+                                fontSize: isTablet
+                                    ? screenWidth * 0.02
+                                    : screenWidth * 0.04, // Dynamic font size
                                 height: 1.5,
                               ),
                             ),
@@ -175,6 +210,10 @@ class WelcomePage extends StatelessWidget {
                         ),
                       ),
                     ),
+                    SizedBox(
+                        height: isTablet
+                            ? screenHeight * 0.05
+                            : screenHeight * 0.01),
                   ],
                 ),
               ),

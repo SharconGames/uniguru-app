@@ -1,3 +1,4 @@
 {
-    "github-enterprise.uri": "https://github.com/SharconGames/uniguru-app.git"
+    "github-enterprise.uri": "https://github.com/SharconGames/uniguru-app.git",
+    "git.ignoreLimitWarning": true
 }

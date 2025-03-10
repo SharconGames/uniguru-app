@@ -1,6 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:uniguru/widgets/bottomnavigationbar.dart';
-import '../widgets/star_background.dart';
+import '../widgets/starScreen/star_background.dart';
 
 class HomePage extends StatefulWidget {
   const HomePage({super.key});
@@ -10,36 +9,40 @@ class HomePage extends StatefulWidget {
 }
 
 class _HomePageState extends State<HomePage> {
-  int _currentIndex = 0;
+  // int _currentIndex = 0;
 
-  void _onTabTapped(int index) {
-    setState(() {
-      _currentIndex = index;
-    });
-    switch (index) {
-      case 0:
-        Navigator.pushNamed(context, '/welcome');
-        break;
-      case 1:
-        Navigator.pushNamed(context, '/createguru');
-        break;
-      case 2:
-        Navigator.pushNamed(context, '/profilepage');
-        break;
-    }
-  }
+  // void _onTabTapped(int index) {
+  //   setState(() {
+  //     _currentIndex = index;
+  //   });
+  //   switch (index) {
+  //     case 0:
+  //       Navigator.pushNamed(context, '/home');
+  //       break;
+  //     case 1:
+  //       Navigator.pushNamed(context, '/createguru');
+  //       break;
+  //     // case 2:
+  //     //   Navigator.pushNamed(context, '/profilepage');
+  //     //   break;
+  //   }
+  // }
 
   @override
   Widget build(BuildContext context) {
     final screenHeight = MediaQuery.of(context).size.height;
     final screenWidth = MediaQuery.of(context).size.width;
 
+    // Determine if it's a tablet with a more precise check
+    bool isTablet = MediaQuery.of(context).size.shortestSide >= 600 ||
+        (screenWidth > 600 && screenWidth / screenHeight < 0.6);
+
     return Scaffold(
       backgroundColor: const Color(0xFF0E0513),
-      bottomNavigationBar: CustomBottomNavigationBar(
-        currentIndex: _currentIndex,
-        onTap: _onTabTapped,
-      ),
+      // bottomNavigationBar: CustomBottomNavigationBar(
+      //   currentIndex: _currentIndex,
+      //   onTap: _onTabTapped,
+      // ),
       body: Stack(
         children: [
           const StarBackground(),
@@ -49,7 +52,9 @@ class _HomePageState extends State<HomePage> {
               child: Column(
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
-                  SizedBox(height: screenHeight * 0.06),
+                  SizedBox(
+                      height:
+                          isTablet ? screenHeight * 0.03 : screenHeight * 0.09),
                   Center(
                     child: ShaderMask(
                       shaderCallback: (bounds) => const LinearGradient(
@@ -62,18 +67,21 @@ class _HomePageState extends State<HomePage> {
                         begin: Alignment.centerLeft,
                         end: Alignment.centerRight,
                       ).createShader(bounds),
-                      child: const Text(
+                      child: Text(
                         'Gurus',
                         style: TextStyle(
                           fontFamily: 'Lexend',
-                          fontSize: 25,
+                          fontSize: isTablet
+                              ? screenWidth * 0.055
+                              : screenWidth * 0.075,
+                          // fontSize: isTablet ? 28 : 25,
                           fontWeight: FontWeight.bold,
                           color: Colors.white,
                         ),
                       ),
                     ),
                   ),
-                  SizedBox(height: screenHeight * 0.09),
+                  SizedBox(height: screenHeight * 0.28),
                   Center(
                     child: ShaderMask(
                       shaderCallback: (bounds) => const LinearGradient(
@@ -88,18 +96,20 @@ class _HomePageState extends State<HomePage> {
                         begin: Alignment.centerLeft,
                         end: Alignment.centerRight,
                       ).createShader(bounds),
-                      child: const Text(
+                      child: Text(
                         "Chat With Your OWN GURU",
                         style: TextStyle(
                           fontFamily: 'Lexend',
                           fontWeight: FontWeight.bold,
-                          fontSize: 18,
+                          fontSize: isTablet ? 20 : 18,
                           color: Colors.white,
                         ),
                       ),
                     ),
                   ),
-                  SizedBox(height: screenHeight * 0.03),
+                  SizedBox(
+                      height:
+                          isTablet ? screenHeight * 0.09 : screenHeight * 0.04),
                   Center(
                     child: Container(
                       decoration: BoxDecoration(
@@ -121,7 +131,7 @@ class _HomePageState extends State<HomePage> {
                       ),
                       child: ElevatedButton(
                         onPressed: () {
-                          Navigator.pushNamed(context, '/createguru');
+                          Navigator.pushNamed(context, '/chat');
                         },
                         style: ElevatedButton.styleFrom(
                           padding: EdgeInsets.symmetric(
@@ -143,59 +153,61 @@ class _HomePageState extends State<HomePage> {
                       ),
                     ),
                   ),
-                  SizedBox(height: screenHeight * 0.1),
-                  ShaderMask(
-                    shaderCallback: (bounds) => const LinearGradient(
-                      colors: [
-                        Color(0xFF70C0CA),
-                        Color(0xFF70C0CA),
-                        Color(0xFFA183E9),
-                        Color(0xFFAF7CE4),
-                        Color(0xFFAD7FDF),
-                        Color(0xFF779BED),
-                        Color(0xFF69A7EF),
-                      ],
-                      begin: Alignment.centerRight,
-                      end: Alignment.centerLeft,
-                    ).createShader(bounds),
-                    child: const Text(
-                      "Suggested Guru's",
-                      style: TextStyle(
-                        fontFamily: 'Lexend',
-                        fontSize: 22,
-                        fontWeight: FontWeight.w500,
-                        color: Colors.white,
-                      ),
-                    ),
-                  ),
-                  SizedBox(height: screenHeight * 0.02),
-                  // Adjusting the ListView
-                  SizedBox(
-                    height: screenHeight * 0.33, // Height for ListView
-                    child: ListView(
-                      scrollDirection: Axis.horizontal,
-                      children: [
-                        guruCard(
-                          "Blackhole Guru",
-                          "Amazing features are out of this world. This is a longer description to test overflow issues and ensure it is handled properly.",
-                          'assets/robogirl1.png',
-                        ),
-                        SizedBox(width: screenWidth * 0.04),
-                        guruCard(
-                          "AI Guru",
-                          "Experience the new capabilities.",
-                          'assets/robogirl1.png',
-                        ),
-                        SizedBox(width: screenWidth * 0.04),
-                        guruCard(
-                          "Data Guru",
-                          "Learn about data science and its impact.",
-                          'assets/demo.jpg',
-                        ),
-                      ],
-                    ),
-                  ),
-                  SizedBox(height: screenHeight * 0.06),
+                  // SizedBox(
+                  //     height:
+                  //         isTablet ? screenHeight * 0.08 : screenHeight * 0.14),
+                  // ShaderMask(
+                  //   shaderCallback: (bounds) => const LinearGradient(
+                  //     colors: [
+                  //       Color(0xFF70C0CA),
+                  //       Color(0xFF70C0CA),
+                  //       Color(0xFFA183E9),
+                  //       Color(0xFFAF7CE4),
+                  //       Color(0xFFAD7FDF),
+                  //       Color(0xFF779BED),
+                  //       Color(0xFF69A7EF),
+                  //     ],
+                  //     begin: Alignment.centerRight,
+                  //     end: Alignment.centerLeft,
+                  //   ).createShader(bounds),
+                  //   child: Text(
+                  //     "Suggested Guru's",
+                  //     style: TextStyle(
+                  //       fontFamily: 'Lexend',
+                  //       fontSize: isTablet ? 24 : 22,
+                  //       fontWeight: FontWeight.w500,
+                  //       color: Colors.white,
+                  //     ),
+                  //   ),
+                  // ),
+                  // SizedBox(height: screenHeight * 0.02),
+                  // // Adjusting the ListView
+                  // SizedBox(
+                  //   height: screenHeight * (isTablet ? 0.47 : 0.26),
+                  //   child: ListView(
+                  //     scrollDirection: Axis.horizontal,
+                  //     children: [
+                  //       guruCard(
+                  //         "Blackhole Guru",
+                  //         "Amazing features are out of this world. ",
+                  //         'assets/robogirl1.png',
+                  //       ),
+                  //       SizedBox(width: screenWidth * 0.04),
+                  //       guruCard(
+                  //         "AI Guru",
+                  //         "Experience the new capabilities.",
+                  //         'assets/robogirl1.png',
+                  //       ),
+                  //       SizedBox(width: screenWidth * 0.04),
+                  //       guruCard(
+                  //         "Data Guru",
+                  //         "Learn about data science and its impact.",
+                  //         'assets/demo.jpg',
+                  //       ),
+                  //     ],
+                  //   ),
+                  // ),
+                  // SizedBox(height: screenHeight * 0.06),
                 ],
               ),
             ),
@@ -209,10 +221,17 @@ class _HomePageState extends State<HomePage> {
     final screenHeight = MediaQuery.of(context).size.height;
     final screenWidth = MediaQuery.of(context).size.width;
 
+    // Determine if it's a tablet
+    bool isTablet = MediaQuery.of(context).size.shortestSide >= 600;
+
     return Container(
-      width: screenWidth * 0.5, // Width of the card
+      width: isTablet
+          ? screenWidth * 0.3
+          : screenWidth * 0.53, // Preserved original phone width
       constraints: BoxConstraints(
-        maxHeight: screenHeight * 0.35, // Set a max height for the card
+        maxHeight: isTablet
+            ? screenHeight * 0.4
+            : screenHeight * 0.5, // Preserved original phone height
       ),
       decoration: BoxDecoration(
         gradient: const LinearGradient(
@@ -225,14 +244,15 @@ class _HomePageState extends State<HomePage> {
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
-          // Set a fixed height for the image
+          // Image with adjusted height
           SizedBox(
-            // height: screenHeight * 0.17, // Adjusted height for the image
+            height: isTablet ? screenHeight * 0.30 : screenHeight * 0.14,
             child: ClipRRect(
               borderRadius: BorderRadius.vertical(top: Radius.circular(20)),
               child: Image.asset(
                 imagePath,
-                fit: BoxFit.cover, // Keep the aspect ratio of the image
+                width: double.infinity,
+                fit: BoxFit.cover,
               ),
             ),
           ),
@@ -252,9 +272,9 @@ class _HomePageState extends State<HomePage> {
               ).createShader(bounds),
               child: Text(
                 title,
-                style: const TextStyle(
+                style: TextStyle(
                   fontFamily: 'Lexend',
-                  fontSize: 18, // Font size
+                  fontSize: isTablet ? 20 : 18, // Minimal font size adjustment
                   fontWeight: FontWeight.bold,
                 ),
               ),
@@ -269,28 +289,16 @@ class _HomePageState extends State<HomePage> {
                 ).createShader(bounds),
                 child: Text(
                   description,
-                  style: const TextStyle(
+                  style: TextStyle(
                     fontFamily: 'Lexend',
-                    fontSize: 12, // Font size
+                    fontSize:
+                        isTablet ? 14 : 12, // Minimal font size adjustment
+                    fontWeight: FontWeight.bold,
                     color: Colors.white,
                   ),
-                  overflow: TextOverflow.ellipsis, // Handle overflow
-                  maxLines: 3, // Limit the number of lines
+                  overflow: TextOverflow.ellipsis,
+                  maxLines: 3,
                 ),
-              ),
-            ),
-          ),
-          // Modify the "See More" button to call _showFullContent
-          TextButton(
-            onPressed: () {
-              _showFullContent(
-                  title, description, imagePath); // Call to show dialog
-            },
-            child: const Text(
-              'See More',
-              style: TextStyle(
-                color: Colors.white,
-                fontWeight: FontWeight.bold,
               ),
             ),
           ),
@@ -299,16 +307,16 @@ class _HomePageState extends State<HomePage> {
     );
   }
 
+  // Existing _showFullContent method remains the same
   void _showFullContent(String title, String description, String imagePath) {
     showDialog(
       context: context,
-      barrierColor: Colors.black54, // Background blur
+      barrierColor: Colors.black54,
       builder: (BuildContext context) {
         return Dialog(
-          // Remove the backgroundColor from the Dialog widget
           child: Container(
             width: double.infinity,
-            height: MediaQuery.of(context).size.height * 0.7, // Adjust height
+            height: MediaQuery.of(context).size.height * 0.7,
             decoration: BoxDecoration(
               gradient: const LinearGradient(
                 colors: [
@@ -322,7 +330,6 @@ class _HomePageState extends State<HomePage> {
             ),
             child: Column(
               children: [
-                // Full image at the top
                 Container(
                   height: MediaQuery.of(context).size.height * 0.4,
                   decoration: BoxDecoration(
@@ -341,7 +348,6 @@ class _HomePageState extends State<HomePage> {
                       child: Column(
                         crossAxisAlignment: CrossAxisAlignment.start,
                         children: [
-                          // Full title with gradient
                           ShaderMask(
                             shaderCallback: (bounds) => const LinearGradient(
                               colors: [
@@ -359,13 +365,11 @@ class _HomePageState extends State<HomePage> {
                                 fontFamily: 'Lexend',
                                 fontSize: 24,
                                 fontWeight: FontWeight.bold,
-                                color: Colors
-                                    .white, // Set color to white to see the gradient effect
+                                color: Colors.white,
                               ),
                             ),
                           ),
                           const SizedBox(height: 10),
-                          // Full description with gradient
                           ShaderMask(
                             shaderCallback: (bounds) => const LinearGradient(
                               colors: [
@@ -382,8 +386,7 @@ class _HomePageState extends State<HomePage> {
                               style: const TextStyle(
                                 fontFamily: 'Lexend',
                                 fontSize: 16,
-                                color: Colors
-                                    .white, // Set color to white to see the gradient effect
+                                color: Colors.white,
                               ),
                             ),
                           ),
@@ -392,10 +395,9 @@ class _HomePageState extends State<HomePage> {
                     ),
                   ),
                 ),
-                // Close button with gradient
                 TextButton(
                   onPressed: () {
-                    Navigator.of(context).pop(); // Close the dialog
+                    Navigator.of(context).pop();
                   },
                   child: ShaderMask(
                     shaderCallback: (bounds) => const LinearGradient(
@@ -410,9 +412,7 @@ class _HomePageState extends State<HomePage> {
                     ).createShader(bounds),
                     child: const Text(
                       "Close",
-                      style: TextStyle(
-                          color: Colors
-                              .white), // Set the text color to white for visibility
+                      style: TextStyle(color: Colors.white),
                     ),
                   ),
                 ),

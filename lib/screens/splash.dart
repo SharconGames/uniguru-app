@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 import 'dart:async';
-import '../widgets/star_background.dart';
+import '../widgets/starScreen/star_background.dart';
 // Import the StarBackground widget
 
 class SplashScreen extends StatefulWidget {
@@ -41,10 +41,12 @@ class _SplashScreenState extends State<SplashScreen>
 
   @override
   Widget build(BuildContext context) {
+    bool isDesktop = MediaQuery.of(context).size.width >= 1024;
     double screenwidth = MediaQuery.of(context).size.width;
     double screenheight = MediaQuery.of(context).size.height;
 
-    return Stack( // Use Stack to layer widgets
+    return Stack(
+      // Use Stack to layer widgets
       children: [
         const StarBackground(), // Add star background
         Center(
@@ -58,8 +60,9 @@ class _SplashScreenState extends State<SplashScreen>
                   'UniGuru',
                   style: TextStyle(
                     fontFamily: 'Lexend',
-                    fontSize: 28,
+                    fontSize: isDesktop ? 30 : 28,
                     fontWeight: FontWeight.bold,
+                    decoration: TextDecoration.none, // Ensure no underline
                     foreground: Paint()
                       ..shader = const LinearGradient(
                         colors: [
@@ -70,11 +73,12 @@ class _SplashScreenState extends State<SplashScreen>
                         ],
                         begin: Alignment.bottomRight,
                         end: Alignment.topLeft,
-                      ).createShader(Rect.fromLTWH(0, 0, 400, 70)), // Set the rect for the gradient
+                      ).createShader(Rect.fromLTWH(
+                          0, 0, 400, 70)), // Set the rect for the gradient
                   ),
                 ),
                 SizedBox(
-                  height: screenheight * 0.40,
+                  height: isDesktop ? screenheight * 0.45 : screenheight * 0.40,
                   child: Image.asset(
                     'assets/splash_image.png',
                     width: screenwidth * 0.7,
@@ -86,6 +90,19 @@ class _SplashScreenState extends State<SplashScreen>
             ),
           ),
         ),
+        // Positioned(
+        //   bottom: 20,
+        //   right: 20,
+        //   child: Image.asset(
+        //     'assets/blackhole_logo.png',
+
+        //     width: isDesktop
+        //         ? screenwidth * 0.06
+        //         : screenwidth * 0.15, // Small size, adjust as needed
+        //     height: screenwidth * 0.15, // Keep it square
+        //     opacity: const AlwaysStoppedAnimation(0.7), // Slight transparency
+        //   ),
+        // ),
       ],
     );
   }
